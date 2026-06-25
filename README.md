@@ -4,7 +4,7 @@
 
 <h1 align="center">NFCAiME</h1>
 
-<p align="center">开源客户端壳、服务器接口与自部署基础实现</p>
+<p align="center">APP</p>
 
 <p align="center">
   <a href="https://github.com/Project-HashCat/NFCAiME/releases/latest"><strong>下载 Release 版</strong></a>
@@ -19,8 +19,7 @@
 公开源码与发布安装包的边界如下：
 
 - 公开源码保留 UI、NFC 读取流程、自定义服务器列表、RSA 上传、错误日志和服务端 webhook 扩展点
-- 公开源码不包含官方服务器通讯、卡号计算、Access Code 解密或 Bot 绑定等核心逻辑
-- Release 中的 IPA/APK 永远由私人仓库构建后发布到本仓库 Release，不从本仓库源码直接构建
+- 公开源码不包含官方服务器通讯与aime加解密部分
 
 ## 目录结构
 
@@ -37,7 +36,7 @@ iOS 和 Android 公开源码提供同一类能力：
 - 本地读取卡片基础信息
 - 用户自行添加远端服务器 URL 和 RSA 公钥
 - 远端模式下上传加密后的卡片安全数据和认证块
-- 显示服务器返回的 Access Code、Konami Card Number、Private Network 等字段
+- 显示服务器返回的 Access Code、Konami Card Number、IDM 等字段
 - 保存卡片记录、隐私显示、错误日志上传和 Release 跳转
 
 客户端不会内置默认公开服务器地址。需要远端功能时，请在 App 内添加自己的服务器地址和该服务器提供的 RSA 公钥。
