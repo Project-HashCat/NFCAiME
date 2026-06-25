@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">NFCAiME</string>
+    <string name="app_title">NFCAiME</string>
+    <string name="app_subtitle">本地卡包 · 读卡刷新 · 错误日志</string>
+    <string name="section_scan">刷卡</string>
+    <string name="section_cards">我的卡</string>
+    <string name="section_about">关于</string>
+    <string name="felica">FeliCa 卡</string>
+    <string name="mifare">MIFARE Classic 卡</string>
+    <string name="nfc_unavailable">此设备不支持 NFC</string>
+    <string name="querying_server">卡片读取成功，正在请求远端服务器…</string>
+    <string name="read_failed">读取失败</string>
+    <string name="server_mode_label">服务器模式</string>
+    <string name="server_mode_local">本地读取</string>
+    <string name="server_mode_remote">远端服务器</string>
+    <string name="local_mode_hint">点击下方读取你的卡片信息内容</string>
+    <string name="remote_mode_hint">选择一个由您自行添加配置的服务器</string>
+    <string name="remote_server_select">选择服务器</string>
+    <string name="server_name_label">服务器名称</string>
+    <string name="server_name_hint">例如 我的服务器</string>
+    <string name="default_server_name">未命名服务器</string>
+    <string name="no_remote_server">请先添加并选择远端服务器</string>
+    <string name="server_saved_local_only">服务器地址只保存在本机</string>
+    <string name="privacy_display">隐私显示：IDM 和 Access Code 只显示最后 4 位</string>
+    <string name="server_host_label">服务器地址</string>
+    <string name="server_host_hint">例如 https://域名/aime_reader，App 会自动补 /card</string>
+    <string name="server_public_key_label">RSA 公钥</string>
+    <string name="server_public_key_hint">粘贴服务器提供的 PEM 公钥</string>
+    <string name="save_host">保存服务器</string>
+    <string name="server_saved">服务器已保存</string>
+    <string name="network_hint_checking">正在检测网络…</string>
+    <string name="local_binding_warning">如需实现其他功能需要配置对应远端服务器</string>
+    <string name="card_type_default">等待读卡</string>
+    <string name="scan_hint">请贴近 NFC 卡片，读卡结果会显示在这里</string>
+    <string name="save_card">保存卡片</string>
+    <string name="card_saved">卡片已保存</string>
+    <string name="my_cards">我的卡</string>
+    <string name="no_saved_cards">还没有保存的卡\n刷卡成功后点击“保存卡片”</string>
+    <string name="clear_cards">清空保存记录</string>
+    <string name="about_title">NFCAiME</string>
+    <string name="latest_update_android">本次更新：自定义远端服务器、RSA 加密上传、本地读取与卡包保存</string>
+    <string name="check_update">检查更新</string>
+    <string name="upload_debug_logs">上传错误日志</string>
+    <string name="upload_no_logs">暂无可上传的错误日志</string>
+    <string name="upload_success">错误日志已上传</string>
+    <string-array name="server_modes">
+        <item>@string/server_mode_local</item>
+        <item>@string/server_mode_remote</item>
+    </string-array>
+</resources>

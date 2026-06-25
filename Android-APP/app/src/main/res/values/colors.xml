@@ -1,0 +1,8 @@
+<resources>
+    <color name="bg">#070A18</color>
+    <color name="card">#202433</color>
+    <color name="ink">#F8FAFC</color>
+    <color name="muted">#A7B0C0</color>
+    <color name="stroke">#354055</color>
+    <color name="field_text">#111827</color>
+</resources>

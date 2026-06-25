@@ -205,7 +205,7 @@ def _build_card_record(data, request: Request):
         "firmwareVersion": _normalize_hex("firmwareVersion", data.get("firmwareVersion"), 1),
         "dfc": _normalize_hex("dfc", data.get("dfc"), 2),
         "spad0EncryptedPresent": True,
-        "spad0DecryptedHex": _decrypt_spad0_encrypted(spad0_encrypted),
+        "cardSecurityDataHex": _decrypt_spad0_encrypted(spad0_encrypted),
         "rawClientPayload": data,
     }
     return record

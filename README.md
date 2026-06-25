@@ -1,26 +1,51 @@
-# NFCAiME Server
+<p align="center">
+  <img src="./iOS_APP/iOS_APP/Assets.xcassets/AppIcon.appiconset/icon-1024.png" width="104" alt="NFCAiME">
+</p>
 
-这是 NFCAiME 公开仓库中的服务端实现，面向自部署和二次开发使用。
+<h1 align="center">NFCAiME</h1>
 
-如果你只是想让 NFCAiME 客户端连接自己的服务器，这个分支可以直接使用。它提供客户端需要的基础接口：公钥分发、加密数据接收、读卡记录保存、错误日志接收，以及可选 webhook 转发。
+<p align="center">开源客户端壳、服务器接口与自部署基础实现</p>
 
-出于公开发布和项目边界考虑，本仓库不会内置任何有关与官方服务器通讯的内容。
+<p align="center">
+  <a href="https://github.com/Project-HashCat/NFCAiME/releases/latest"><strong>下载 Release 版</strong></a>
+</p>
 
-如果你需要实现绑定 Bot、刷新卡、私服联动、账号系统或其他自定义功能，请使用 webhook 把解密后的读卡记录转发到你自己的后端处理。
+> <strong>出于公开发布和项目边界考虑，本仓库不会内置任何有关与官方服务器通讯的内容与计算逻辑</strong>
 
-## 功能
+## 仓库说明
 
-- 提供 `/public-key` 给客户端获取 RSA 公钥
-- 接收客户端上传到 `/card` 的 RSA 加密 SPAD0 数据
-- 把解密后的卡片安全数据保存到本地 SQLite
-- 可选转发到你配置的 webhook
-- 接收客户端手动上传的加密错误日志 `/debug-log`
+本仓库是 NFCAiME 的公开版本，用于展示客户端结构、自定义服务器配置流程、RSA 加密上传接口和最小服务端接收逻辑。
 
-## 快速开始
+公开源码与发布安装包的边界如下：
+
+- 公开源码保留 UI、NFC 读取流程、自定义服务器列表、RSA 上传、错误日志和服务端 webhook 扩展点
+- 公开源码不包含官方服务器通讯、卡号计算、Access Code 解密或 Bot 绑定等核心逻辑
+- Release 中的 IPA/APK 永远由私人仓库构建后发布到本仓库 Release，不从本仓库源码直接构建
+
+## 目录结构
+
+```text
+Android-APP/  Android 客户端公开源码
+iOS_APP/      iOS 客户端公开源码
+server/       自部署服务端公开源码
+```
+
+## 客户端
+
+iOS 和 Android 公开源码提供同一类能力：
+
+- 本地读取卡片基础信息
+- 用户自行添加远端服务器 URL 和 RSA 公钥
+- 远端模式下上传加密后的卡片安全数据和认证块
+- 显示服务器返回的 Access Code、Konami Card Number、Private Network 等字段
+- 保存卡片记录、隐私显示、错误日志上传和 Release 跳转
+
+客户端不会内置默认公开服务器地址。需要远端功能时，请在 App 内添加自己的服务器地址和该服务器提供的 RSA 公钥。
+
+## 服务端快速开始
 
 ```bash
 cd server
-
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -40,73 +65,51 @@ CARD_SERVER_HOST=0.0.0.0
 CARD_SERVER_PORT=8000
 SPAD0_RSA_PRIVATE_KEY_FILE=./data/spad0_private_key.pem
 DEBUG_LOG_SECRET=NFCAimeDebugLog-v1
-
 NFCAIME_CARD_WEBHOOK_URL=
 NFCAIME_CARD_WEBHOOK_TOKEN=
 ```
 
-启动后可以检查：
+启动后检查：
 
 ```bash
 curl http://127.0.0.1:8000/health
 curl http://127.0.0.1:8000/public-key
 ```
 
-## 客户端服务器地址
-
-如果直接暴露 8000 端口：
-
-```text
-http://你的服务器IP:8000/card
-```
-
-如果使用反向代理，例如：
+客户端服务器地址填写 `/card` 入口，例如：
 
 ```text
 https://example.com/aime_reader/card
 ```
 
-需要确保同级路径可访问：
+同级路径需要能访问：
 
 ```text
-https://example.com/aime_reader/card
-https://example.com/aime_reader/public-key
-https://example.com/aime_reader/debug-log
-https://example.com/aime_reader/health
+/public-key
+/debug-log
+/health
 ```
 
-## Webhook 转发
+## Webhook 扩展
 
-如果你想把读卡数据交给自己的后端处理，配置：
+如果你要实现账号系统、Bot 绑定、私服联动或其他自定义功能，把 webhook 配到服务端：
 
 ```env
 NFCAIME_CARD_WEBHOOK_URL=https://your-server.example.com/nfcaime/card-webhook
 NFCAIME_CARD_WEBHOOK_TOKEN=your-secret-token
 ```
 
-服务会把解密后的记录转发到该地址。
+服务端会将解密后的读卡记录转发给 webhook。webhook 返回 JSON 时，会合并进客户端响应。
 
-请求头：
-
-```text
-Authorization: Bearer your-secret-token
-Content-Type: application/json
-```
-
-webhook 返回 JSON 时，会合并进客户端响应。
-
-例如：
+示例响应：
 
 ```json
 {
   "ok": true,
   "code": "YOUR-CARD-CODE",
-  "display": [
-    {
-      "label": "Server",
-      "value": "Custom Backend"
-    }
-  ]
+  "accessCodeHex": "50110000000000000000",
+  "konamiCardNumber": "ABCD1234EFGH5678",
+  "privateNetworkNumber": "00080000000000000000"
 }
 ```
 
@@ -116,30 +119,19 @@ webhook 返回 JSON 时，会合并进客户端响应。
 
 健康检查。
 
-```json
-{
-  "ok": true,
-  "mode": "public"
-}
-```
-
 ### GET /public-key
 
-返回 RSA 公钥 PEM，客户端会用它加密 SPAD0。
+返回 RSA 公钥 PEM，客户端会使用它加密卡片安全数据。
 
 ### POST /card
 
-接收客户端上传的读卡数据。
-
-必须包含：
+接收客户端上传的读卡数据。服务端只接受加密字段：
 
 ```json
 {
   "spad0Encrypted": "base64..."
 }
 ```
-
-服务端不会接受明文 SPAD0。
 
 ### POST /debug-log
 
@@ -148,6 +140,6 @@ webhook 返回 JSON 时，会合并进客户端响应。
 ## 注意事项
 
 - 私钥只放在服务器，不要提交到 Git
-- 客户端只需要服务器公钥
+- 客户端只保存服务器 URL 和公钥
 - 自定义业务逻辑建议通过 webhook 或独立后端实现
 - 生产环境建议只通过 HTTPS 暴露服务
