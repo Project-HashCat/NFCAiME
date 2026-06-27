@@ -21,6 +21,14 @@
 - 公开源码保留 UI、NFC 读取流程、自定义服务器列表、RSA 上传、错误日志和服务端 webhook 扩展点
 - 公开源码不包含官方服务器通讯与aime加解密部分
 
+## 配套 AiMEIO 插件
+
+[NFCAiME AiMEIO](https://github.com/Project-HashCat/NFCAiME-AiMEIO) 是本项目的电脑端配套插件，需要与 NFCAiME App 一起使用。
+
+手机读取卡片后，数据会通过相同的 `session-key` 转发到电脑端，由 AiMEIO Mod 接入 maimai DX 的读卡流程。安装、配置和 Release 下载请查看：
+
+<https://github.com/Project-HashCat/NFCAiME-AiMEIO>
+
 ## 目录结构
 
 ```text
