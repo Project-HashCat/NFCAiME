@@ -2,7 +2,7 @@
 
 > <strong>出于公开发布和项目边界考虑，本仓库不会内置任何有关与官方服务器通讯的内容与计算逻辑</strong>
 
-这个服务端只负责接收客户端上传的加密卡片数据、保存记录、接收错误日志，并按需转发到你自己的 webhook。
+这个服务端只负责接收客户端上传的加密卡片数据、保存记录、接收错误日志，并按需转发到你自己的 webhook
 
 ## 快速开始
 
@@ -43,7 +43,7 @@ NFCAIME_CARD_WEBHOOK_TOKEN=
 https://example.com/aime_reader/card
 ```
 
-同级路径需要能访问 `/public-key`、`/debug-log` 和 `/health`。
+同级路径需要能访问 `/public-key`、`/debug-log` 和 `/health`
 
 ## Webhook
 
@@ -54,4 +54,4 @@ NFCAIME_CARD_WEBHOOK_URL=https://your-server.example.com/nfcaime/card-webhook
 NFCAIME_CARD_WEBHOOK_TOKEN=your-secret-token
 ```
 
-webhook 返回 JSON 时，会合并进客户端响应。
+webhook 返回 JSON 时，会合并进客户端响应

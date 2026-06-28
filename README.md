@@ -14,7 +14,7 @@
 
 ## 仓库说明
 
-本仓库是 NFCAiME 的公开版本，用于展示客户端结构、自定义服务器配置流程、RSA 加密上传接口和最小服务端接收逻辑。
+本仓库是 NFCAiME 的公开版本，用于展示客户端结构、自定义服务器配置流程、RSA 加密上传接口和最小服务端接收逻辑
 
 公开源码与发布安装包的边界如下：
 
@@ -23,9 +23,11 @@
 
 ## 配套 AiMEIO 插件
 
-[NFCAiME AiMEIO](https://github.com/Project-HashCat/NFCAiME-AiMEIO) 是本项目的电脑端配套插件，需要与 NFCAiME App 一起使用。
+[NFCAiME AiMEIO](https://github.com/Project-HashCat/NFCAiME-AiMEIO) 是本项目的电脑端配套插件，需要与 NFCAiME App 一起使用
 
-手机读取卡片后，数据会通过相同的 `session-key` 转发到电脑端，由 AiMEIO Mod 接入 maimai DX 的读卡流程。安装、配置和 Release 下载请查看：
+手机读取卡片后，数据会通过相同的 `session-key` 转发到电脑端，由 AiMEIO Mod 接入 maimai DX 的读卡流程
+
+安装、配置和 Release 下载请查看
 
 <https://github.com/Project-HashCat/NFCAiME-AiMEIO>
 
@@ -47,7 +49,9 @@ iOS 和 Android 公开源码提供同一类能力：
 - 显示服务器返回的 Access Code、Konami Card Number、IDM 等字段
 - 保存卡片记录、隐私显示、错误日志上传和 Release 跳转
 
-客户端不会内置默认公开服务器地址。需要远端功能时，请在 App 内添加自己的服务器地址和该服务器提供的 RSA 公钥。
+客户端不会内置默认公开服务器地址
+
+需要远端功能时，请在 App 内添加自己的服务器地址和该服务器提供的 RSA 公钥
 
 ## 服务端快速开始
 
@@ -106,7 +110,9 @@ NFCAIME_CARD_WEBHOOK_URL=https://your-server.example.com/nfcaime/card-webhook
 NFCAIME_CARD_WEBHOOK_TOKEN=your-secret-token
 ```
 
-服务端会将解密后的读卡记录转发给 webhook。webhook 返回 JSON 时，会合并进客户端响应。
+服务端会将解密后的读卡记录转发给 webhook
+
+webhook 返回 JSON 时，会合并进客户端响应
 
 示例响应：
 
@@ -124,15 +130,17 @@ NFCAIME_CARD_WEBHOOK_TOKEN=your-secret-token
 
 ### GET /health
 
-健康检查。
+健康检查
 
 ### GET /public-key
 
-返回 RSA 公钥 PEM，客户端会使用它加密卡片安全数据。
+返回 RSA 公钥 PEM，客户端会使用它加密卡片安全数据
 
 ### POST /card
 
-接收客户端上传的读卡数据。服务端只接受加密字段：
+接收客户端上传的读卡数据
+
+服务端只接受加密字段：
 
 ```json
 {
@@ -142,11 +150,4 @@ NFCAIME_CARD_WEBHOOK_TOKEN=your-secret-token
 
 ### POST /debug-log
 
-接收客户端手动上传的加密错误日志。
-
-## 注意事项
-
-- 私钥只放在服务器，不要提交到 Git
-- 客户端只保存服务器 URL 和公钥
-- 自定义业务逻辑建议通过 webhook 或独立后端实现
-- 生产环境建议只通过 HTTPS 暴露服务
+接收客户端手动上传的加密错误日志
